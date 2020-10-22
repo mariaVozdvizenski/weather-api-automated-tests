@@ -1,6 +1,7 @@
 package ee.icd0004.mavozd;
 
 import ee.icd0004.mavozd.api.WeatherApi;
+import org.apache.commons.validator.GenericValidator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -84,14 +85,46 @@ public class WeatherTimeTests
     }
 
     @Test
-    public void shouldHaveCorrectTemperatureInWeatherReport()
+    public void shouldHaveForecastReportListInWeatherReport()
     {
         String cityName = "Tallinn";
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
 
-        int expectedTemperature = new WeatherApi().getCurrentWeatherData(cityName).getMain().getTemp();
+        assertThat(weatherReport.getForecastReportList());
+    }
 
-        assertThat(weatherReport.getCurrentWeather().getTemperature()).isEqualTo(expectedTemperature);
+    @Test
+    public void shouldHaveThreeDayForecastInWeatherReport()
+    {
+        String cityName = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
+
+        assertThat(weatherReport.getForecastReportList()).hasSize(3);
+    }
+
+    @Test
+    public void shouldHaveCorrectDateFormatInWeatherReport()
+    {
+        String cityName = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
+
+        String actualDate = weatherReport.getForecastReportList().get(0).getDate();
+
+        assertThat(GenericValidator.isDate(actualDate, "yyyy-mm-dd", true)).isTrue();
+    }
+
+    @Test
+    public void shouldHaveCorrectDatesInWeatherReport()
+    {
+        String cityName = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
+
+        String nextDay = LocalDate.now().plusDays(1L).toString();
+
+        assertThat(weatherReport.getForecastReportList().get(0).getDate()).isEqualTo(nextDay);
     }
 }

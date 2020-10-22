@@ -1,12 +1,11 @@
 package ee.icd0004.mavozd.api;
-
 import lombok.Data;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Main {
-    private int temp;
-    private int humidity;
-    private int pressure;
+public class ForecastWeatherData {
+    private List<MainForecast> list;
 }
+

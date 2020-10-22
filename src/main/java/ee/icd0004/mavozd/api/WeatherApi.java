@@ -6,6 +6,7 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 
+
 import static com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING;
 
 public class WeatherApi {
@@ -28,6 +29,19 @@ public class WeatherApi {
         currentWeatherData.setTemperatureUnit("Celsius");
 
         return currentWeatherData;
+    }
+
+    public ForecastWeatherData getForecastWeatherData(String cityName) {
+        Client client = getConfiguredClient();
+        String resourceUrl = BASEURL + "/forecast";
+
+        ClientResponse response = client.resource(resourceUrl)
+                .queryParam("q", cityName)
+                .queryParam("appid", API_KEY)
+                .queryParam("units", UNITS)
+                .get(ClientResponse.class);
+
+        return response.getEntity(ForecastWeatherData.class);
     }
 
     private static Client getConfiguredClient(){

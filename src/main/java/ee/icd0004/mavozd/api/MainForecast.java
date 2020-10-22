@@ -5,9 +5,7 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CurrentWeatherData {
-    private String name;
-    private Coordinates coord;
-    private String temperatureUnit;
+public class MainForecast {
+    private long dt;
     private MainForecastData main;
 }
