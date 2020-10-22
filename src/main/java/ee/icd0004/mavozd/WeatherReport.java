@@ -7,4 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class WeatherReport {
     @JsonProperty("weatherReportDetails")
     private MainDetails mainDetails;
+
+    @JsonProperty("currentWeatherReport")
+    private CurrentWeather currentWeather;
 }

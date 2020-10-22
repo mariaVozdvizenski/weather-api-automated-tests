@@ -4,6 +4,8 @@ import ee.icd0004.mavozd.api.WeatherApi;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WeatherTimeTests
@@ -42,11 +44,9 @@ public class WeatherTimeTests
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
 
-        Double lat = 59.44;
-        Double longitude = 24.75;
+        String coordinates = "59.44,24.75";
 
-        assertThat(weatherReport.getMainDetails().getCoordinates().getLat()).isEqualTo(lat);
-        assertThat(weatherReport.getMainDetails().getCoordinates().getLon()).isEqualTo(longitude);
+        assertThat(weatherReport.getMainDetails().getCoordinates()).isEqualTo(coordinates);
     }
 
     @Test
@@ -56,8 +56,42 @@ public class WeatherTimeTests
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
 
-        String temperatureUnit = "Celsius";
+        String expectedTemperatureUnit = "Celsius";
 
-        assertThat(weatherReport.getMainDetails().getTemperatureUnit()).isEqualTo(temperatureUnit);
+        assertThat(weatherReport.getMainDetails().getTemperatureUnit()).isEqualTo(expectedTemperatureUnit);
+    }
+
+    @Test
+    public void shouldHaveCurrentWeatherInWeatherReport()
+    {
+        String cityName = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
+
+        assertThat(weatherReport.getCurrentWeather()).isNotNull();
+    }
+
+    @Test
+    public void shouldHaveCorrectDateInWeatherReport()
+    {
+        String cityName = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
+
+        String expectedDate = LocalDate.now().toString();
+
+        assertThat(weatherReport.getCurrentWeather().getDate()).isEqualTo(expectedDate);
+    }
+
+    @Test
+    public void shouldHaveCorrectTemperatureInWeatherReport()
+    {
+        String cityName = "Tallinn";
+
+        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
+
+        int expectedTemperature = new WeatherApi().getCurrentWeatherData(cityName).getMain().getTemp();
+
+        assertThat(weatherReport.getCurrentWeather().getTemperature()).isEqualTo(expectedTemperature);
     }
 }
