@@ -2,10 +2,6 @@ package ee.icd0004.mavozd;
 
 import ee.icd0004.mavozd.api.*;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class WeatherTime {
@@ -16,17 +12,23 @@ public class WeatherTime {
         this.weatherApi = weatherApi;
     }
 
+    public CurrentWeatherData getCurrentWeatherData(String cityName){
+        return weatherApi.getCurrentWeatherData(cityName);
+    }
+
+    public ForecastWeatherData getForecastWeatherData(String cityName){
+        return weatherApi.getForecastWeatherData(cityName);
+    }
+
     public WeatherReport getWeatherReportForCity(String cityName) {
         ForecastParser forecastParser = new ForecastParser();
-
         WeatherReport weatherReport = new WeatherReport();
 
-        CurrentWeatherData currentWeatherData = weatherApi.getCurrentWeatherData(cityName);
+        CurrentWeatherData currentWeatherData = getCurrentWeatherData(cityName);
+        ForecastWeatherData forecastWeatherData = getForecastWeatherData(cityName);
 
         MainDetails mainDetails = getMainDetails(currentWeatherData);
         CurrentWeather currentWeather = getCurrentWeather(currentWeatherData);
-
-        ForecastWeatherData forecastWeatherData = weatherApi.getForecastWeatherData(cityName);
 
         List<ForecastReport> forecastReports = forecastParser.ParseForecastDataFromApi(forecastWeatherData);
 
@@ -39,7 +41,9 @@ public class WeatherTime {
 
 
     private CurrentWeather getCurrentWeather(CurrentWeatherData currentWeatherData) {
+        ForecastParser parser = new ForecastParser();
         CurrentWeather currentWeather = new CurrentWeather();
+        currentWeather.setDate(parser.parseDate(currentWeatherData.getDt()));
         currentWeather.setTemperature(currentWeatherData.getMain().getTemp());
         currentWeather.setHumidity(currentWeatherData.getMain().getHumidity());
         currentWeather.setPressure(currentWeatherData.getMain().getPressure());
@@ -57,5 +61,4 @@ public class WeatherTime {
     private String parseCoordinates(Coordinates coordinates) {
         return String.format("%s,%s", coordinates.getLat(), coordinates.getLon());
     }
-
 }

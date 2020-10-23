@@ -41,9 +41,9 @@ public class ForecastParser {
         return forecastReports;
     }
 
-    private String parseDate(long unix)
+    public String parseDate(long unix)
     {
-        Date date = new java.util.Date(unix*1000L);
+        Date date = new java.util.Date(unix * 1000L);
         SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
         return sdf.format(date);

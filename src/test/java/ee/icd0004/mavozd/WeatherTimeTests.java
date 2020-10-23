@@ -5,20 +5,21 @@ import org.apache.commons.validator.GenericValidator;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class WeatherTimeTests
 {
-    static WeatherApi weatherApi;
 
     static WeatherTime weatherTime;
 
     @BeforeClass
     public static void setUp() {
-        weatherApi = new WeatherApi();
-        weatherTime = new WeatherTime(weatherApi);
+        weatherTime = new WeatherTime(new WeatherApi());
     }
 
     @Test
@@ -82,7 +83,10 @@ public class WeatherTimeTests
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
 
-        String expectedDate = LocalDate.now().toString();
+        Date dt = Date.from(Instant.now());
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
+
+        String expectedDate = date.format(dt);
 
         assertThat(weatherReport.getCurrentWeather().getDate()).isEqualTo(expectedDate);
     }

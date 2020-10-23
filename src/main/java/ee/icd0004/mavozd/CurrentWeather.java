@@ -2,11 +2,11 @@ package ee.icd0004.mavozd;
 
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @Data
 public class CurrentWeather {
-    private String date = LocalDate.now().toString();
+    private String date;
     private int temperature;
     private int humidity;
     private int pressure;
