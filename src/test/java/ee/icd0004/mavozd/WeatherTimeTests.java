@@ -11,11 +11,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class WeatherTimeTests
 {
+    static WeatherApi weatherApi;
+
     static WeatherTime weatherTime;
 
     @BeforeClass
     public static void setUp() {
-        weatherTime = new WeatherTime(new WeatherApi());
+        weatherApi = new WeatherApi();
+        weatherTime = new WeatherTime(weatherApi);
     }
 
     @Test
@@ -117,14 +120,17 @@ public class WeatherTimeTests
     }
 
     @Test
-    public void shouldHaveCorrectDatesInWeatherReport()
+    public void shouldHaveDatesInAscendingOrderInWeatherReport()
     {
         String cityName = "Tallinn";
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
 
-        String nextDay = LocalDate.now().plusDays(1L).toString();
-
-        assertThat(weatherReport.getForecastReportList().get(0).getDate()).isEqualTo(nextDay);
+        long dayCounter = 1L;
+        for (ForecastReport forecastReport :weatherReport.getForecastReportList()) {
+            String nextDay = LocalDate.now().plusDays(dayCounter).toString();
+            assertThat(forecastReport.getDate()).isEqualTo(nextDay);
+            dayCounter++;
+        }
     }
 }

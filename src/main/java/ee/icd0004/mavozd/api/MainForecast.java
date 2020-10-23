@@ -7,5 +7,5 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MainForecast {
     private long dt;
-    private MainForecastData main;
+    private MainWeatherData main;
 }

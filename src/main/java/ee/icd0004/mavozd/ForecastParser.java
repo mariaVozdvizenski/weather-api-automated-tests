@@ -10,7 +10,7 @@ public class ForecastParser {
 
     public ArrayList<ForecastReport> ParseForecastDataFromApi(ForecastWeatherData forecastWeatherData) {
 
-        int counter = 0;
+        int dayCounter = 0;
         int temp = 0;
         int pressure = 0;
         int humidity = 0;
@@ -22,9 +22,10 @@ public class ForecastParser {
             temp += forecastWeatherData.getList().get(i).getMain().getTemp();
             pressure += forecastWeatherData.getList().get(i).getMain().getPressure();
             humidity += forecastWeatherData.getList().get(i).getMain().getPressure();
-            counter++;
+            dayCounter++;
 
-            if (counter == 8) {
+            // Since there are 8 forecasts per day.
+            if (dayCounter == 8) {
                 ForecastWeather forecastWeather = new ForecastWeather(temp/8, humidity/8, pressure/8);
                 ForecastReport forecastReport = new ForecastReport();
                 forecastReport.setWeather(forecastWeather);
@@ -34,7 +35,7 @@ public class ForecastParser {
                 temp = 0;
                 pressure = 0;
                 humidity = 0;
-                counter = 0;
+                dayCounter = 0;
             }
         }
         return forecastReports;
@@ -42,7 +43,7 @@ public class ForecastParser {
 
     private String parseDate(long unix)
     {
-        Date date = new java.util.Date(unix*1000);
+        Date date = new java.util.Date(unix*1000L);
         SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
         return sdf.format(date);

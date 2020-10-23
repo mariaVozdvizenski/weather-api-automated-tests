@@ -9,5 +9,5 @@ public class CurrentWeatherData {
     private String name;
     private Coordinates coord;
     private String temperatureUnit;
-    private MainForecastData main;
+    private MainWeatherData main;
 }

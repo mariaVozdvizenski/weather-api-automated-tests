@@ -30,12 +30,13 @@ public class WeatherTime {
 
         List<ForecastReport> forecastReports = forecastParser.ParseForecastDataFromApi(forecastWeatherData);
 
-        weatherReport.setForecastReportList(forecastReports.subList(1, 4));
+        weatherReport.setForecastReportList(forecastReports.subList(0, 3));
         weatherReport.setMainDetails(mainDetails);
         weatherReport.setCurrentWeather(currentWeather);
 
         return weatherReport;
     }
+
 
     private CurrentWeather getCurrentWeather(CurrentWeatherData currentWeatherData) {
         CurrentWeather currentWeather = new CurrentWeather();
