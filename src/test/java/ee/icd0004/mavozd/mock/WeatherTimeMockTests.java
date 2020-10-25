@@ -1,6 +1,5 @@
 package ee.icd0004.mavozd.mock;
 
-import ee.icd0004.mavozd.WeatherReport;
 import ee.icd0004.mavozd.WeatherTime;
 import ee.icd0004.mavozd.api.*;
 import org.junit.Test;
@@ -9,9 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyString;

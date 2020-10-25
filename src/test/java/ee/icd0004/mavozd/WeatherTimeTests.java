@@ -85,7 +85,6 @@ public class WeatherTimeTests
 
         Date dt = Date.from(Instant.now());
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-
         String expectedDate = date.format(dt);
 
         assertThat(weatherReport.getCurrentWeather().getDate()).isEqualTo(expectedDate);

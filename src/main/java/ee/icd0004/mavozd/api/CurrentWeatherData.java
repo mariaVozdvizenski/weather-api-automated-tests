@@ -3,8 +3,6 @@ package ee.icd0004.mavozd.api;
 import lombok.Data;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-import java.time.Instant;
-
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrentWeatherData {

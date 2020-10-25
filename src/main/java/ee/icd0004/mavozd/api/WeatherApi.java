@@ -6,7 +6,6 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider;
 
-
 import static com.sun.jersey.api.json.JSONConfiguration.FEATURE_POJO_MAPPING;
 
 public class WeatherApi {
