@@ -26,7 +26,7 @@ public class WeatherApiTests {
     }
 
     @Test
-    public void shouldReturnCorrectDateInApiWeatherData() {
+    public void shouldReturnCorrectTimestampInApiWeatherData() {
         WeatherApi weatherApi = new WeatherApi();
 
         String city = "Tallinn";
@@ -66,4 +66,5 @@ public class WeatherApiTests {
 
         assertThat(actualCurrentWeatherData.getTemperatureUnit()).isEqualTo(expectedCurrentWeatherData.getTemperatureUnit());
     }
+
 }

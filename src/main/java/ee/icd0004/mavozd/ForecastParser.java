@@ -5,10 +5,11 @@ import ee.icd0004.mavozd.api.ForecastWeatherData;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ForecastParser {
 
-    public ArrayList<ForecastReport> ParseForecastDataFromApi(ForecastWeatherData forecastWeatherData) {
+    public List<ForecastReport> parseForecastDataFromApi(ForecastWeatherData forecastWeatherData) {
 
         int dayCounter = 0;
         int temp = 0;

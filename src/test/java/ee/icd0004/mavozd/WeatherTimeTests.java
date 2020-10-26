@@ -19,7 +19,7 @@ public class WeatherTimeTests
 
     @BeforeClass
     public static void setUp() {
-        weatherTime = new WeatherTime(new WeatherApi());
+        weatherTime = new WeatherTime(new WeatherApi(), new ForecastParser());
     }
 
     @Test

@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         String cityName = "Tallinn";
-        WeatherTime weatherTime = new WeatherTime(new WeatherApi());
+        WeatherTime weatherTime = new WeatherTime(new WeatherApi(), new ForecastParser());
         WeatherReport weatherReportForCity = weatherTime.getWeatherReportForCity(cityName);
         ObjectMapper mapper = new ObjectMapper();
         try {

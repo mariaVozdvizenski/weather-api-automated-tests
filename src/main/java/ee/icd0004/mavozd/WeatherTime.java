@@ -6,13 +6,15 @@ import java.util.List;
 
 public class WeatherTime {
 
-    private WeatherApi weatherApi;
+    private final WeatherApi weatherApi;
+    private final ForecastParser forecastParser;
 
-    public WeatherTime(WeatherApi weatherApi) {
+    public WeatherTime(WeatherApi weatherApi, ForecastParser forecastParser) {
         this.weatherApi = weatherApi;
+        this.forecastParser = forecastParser;
     }
 
-    public CurrentWeatherData getCurrentWeatherData(String cityName){
+    private CurrentWeatherData getCurrentWeatherData(String cityName){
         return weatherApi.getCurrentWeatherData(cityName);
     }
 
@@ -21,26 +23,27 @@ public class WeatherTime {
     }
 
     public WeatherReport getWeatherReportForCity(String cityName) {
-        ForecastParser forecastParser = new ForecastParser();
-        WeatherReport weatherReport = new WeatherReport();
-
         CurrentWeatherData currentWeatherData = getCurrentWeatherData(cityName);
         ForecastWeatherData forecastWeatherData = getForecastWeatherData(cityName);
 
-        MainDetails mainDetails = getMainDetails(currentWeatherData);
-        CurrentWeather currentWeather = getCurrentWeather(currentWeatherData);
+        MainDetails mainDetails = createMainDetails(currentWeatherData);
+        CurrentWeather currentWeather = createCurrentWeather(currentWeatherData);
 
-        List<ForecastReport> forecastReports = forecastParser.ParseForecastDataFromApi(forecastWeatherData);
+        List<ForecastReport> forecastReports = forecastParser.parseForecastDataFromApi(forecastWeatherData);
 
+        return createWeatherReport(mainDetails, currentWeather, forecastReports);
+    }
+
+    public WeatherReport createWeatherReport(MainDetails mainDetails, CurrentWeather currentWeather, List<ForecastReport> forecastReports) {
+        WeatherReport weatherReport = new WeatherReport();
         weatherReport.setForecastReportList(forecastReports.subList(0, 3));
         weatherReport.setMainDetails(mainDetails);
         weatherReport.setCurrentWeather(currentWeather);
-
         return weatherReport;
     }
 
 
-    private CurrentWeather getCurrentWeather(CurrentWeatherData currentWeatherData) {
+    private CurrentWeather createCurrentWeather(CurrentWeatherData currentWeatherData) {
         ForecastParser parser = new ForecastParser();
         CurrentWeather currentWeather = new CurrentWeather();
         currentWeather.setDate(parser.parseDate(currentWeatherData.getDt()));
@@ -50,7 +53,7 @@ public class WeatherTime {
         return currentWeather;
     }
 
-    private MainDetails getMainDetails(CurrentWeatherData currentWeatherData) {
+    private MainDetails createMainDetails(CurrentWeatherData currentWeatherData) {
         MainDetails mainDetails = new MainDetails();
         mainDetails.setCity(currentWeatherData.getName());
         mainDetails.setCoordinates(parseCoordinates(currentWeatherData.getCoord()));
