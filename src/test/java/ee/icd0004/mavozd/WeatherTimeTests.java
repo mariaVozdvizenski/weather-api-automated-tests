@@ -2,9 +2,11 @@ package ee.icd0004.mavozd;
 
 import ee.icd0004.mavozd.api.WeatherApi;
 import org.apache.commons.validator.GenericValidator;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -135,5 +137,20 @@ public class WeatherTimeTests
             assertThat(forecastReport.getDate()).isEqualTo(nextDay);
             dayCounter++;
         }
+    }
+
+    @Test
+    public void shouldReturnEmptyJsonIfGivenCityNameThatDoesntExist() throws IOException {
+        String cityName = "Tallinnz";
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        WeatherReport actualWeatherReport = weatherTime.getWeatherReportForCity(cityName);
+        String actualJson = mapper.writeValueAsString(actualWeatherReport);
+
+        WeatherReport expectedWeatherReport = new WeatherReport();
+        String expectedJson = mapper.writeValueAsString(expectedWeatherReport);
+
+        assertThat(actualJson).isEqualTo(expectedJson);
     }
 }

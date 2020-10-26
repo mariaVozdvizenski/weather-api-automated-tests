@@ -2,6 +2,7 @@ package ee.icd0004.mavozd;
 
 import ee.icd0004.mavozd.api.Coordinates;
 import ee.icd0004.mavozd.api.CurrentWeatherData;
+import ee.icd0004.mavozd.api.ForecastWeatherData;
 import ee.icd0004.mavozd.api.WeatherApi;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ import static org.assertj.core.api.Assertions.*;
 public class WeatherApiTests {
 
     @Test
-    public void shouldReturnCorrectCityInApiWeatherData() {
+    public void shouldReturnCorrectCityInCurrentWeatherData() {
         WeatherApi weatherApi = new WeatherApi();
 
         String city = "Tallinn";
@@ -26,7 +27,7 @@ public class WeatherApiTests {
     }
 
     @Test
-    public void shouldReturnCorrectTimestampInApiWeatherData() {
+    public void shouldReturnCorrectTimestampInCurrentWeatherData() {
         WeatherApi weatherApi = new WeatherApi();
 
         String city = "Tallinn";
@@ -40,7 +41,7 @@ public class WeatherApiTests {
     }
 
     @Test
-    public void shouldHaveCorrectCoordinatesInApiWeatherData() {
+    public void shouldHaveCorrectCoordinatesInCurrentWeatherData() {
         WeatherApi weatherApi = new WeatherApi();
 
         String city = "Tallinn";
@@ -54,7 +55,7 @@ public class WeatherApiTests {
     }
 
     @Test
-    public void shouldHaveCorrectTemperatureUnitInApiWeatherData() {
+    public void shouldHaveCorrectTemperatureUnitInCurrentWeatherData() {
         WeatherApi weatherApi = new WeatherApi();
 
         String city = "Tallinn";
@@ -67,4 +68,39 @@ public class WeatherApiTests {
         assertThat(actualCurrentWeatherData.getTemperatureUnit()).isEqualTo(expectedCurrentWeatherData.getTemperatureUnit());
     }
 
+    @Test
+    public void shouldReturnCurrentWeatherDataEmptyObjectIfGivenCityThatDoesntExist() {
+        WeatherApi weatherApi = new WeatherApi();
+
+        String city = "Tallinnz";
+
+        CurrentWeatherData expectedCurrentWeatherData = new CurrentWeatherData();
+
+        CurrentWeatherData actualCurrentWeatherData = weatherApi.getCurrentWeatherData(city);
+
+        assertThat(actualCurrentWeatherData).isEqualTo(expectedCurrentWeatherData);
+    }
+
+    @Test
+    public void shouldReturnForecastWeatherDataEmptyObjectIfGivenCityThatDoesntExist() {
+        WeatherApi weatherApi = new WeatherApi();
+
+        String city = "Tallinn<";
+
+        ForecastWeatherData expectedForecastWeatherData = new ForecastWeatherData();
+        ForecastWeatherData forecastWeatherData = weatherApi.getForecastWeatherData(city);
+
+        assertThat(forecastWeatherData).isEqualTo(expectedForecastWeatherData);
+    }
+
+    @Test
+    public void shouldReturnFiveDayForecastInForecastWeatherData() {
+        WeatherApi weatherApi = new WeatherApi();
+
+        String city = "Tallinn";
+
+        ForecastWeatherData forecastWeatherData = weatherApi.getForecastWeatherData(city);
+
+        assertThat(forecastWeatherData.getList().size()).isEqualTo(40);
+    }
 }

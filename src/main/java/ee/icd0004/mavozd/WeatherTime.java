@@ -26,12 +26,13 @@ public class WeatherTime {
         CurrentWeatherData currentWeatherData = getCurrentWeatherData(cityName);
         ForecastWeatherData forecastWeatherData = getForecastWeatherData(cityName);
 
-        MainDetails mainDetails = createMainDetails(currentWeatherData);
-        CurrentWeather currentWeather = createCurrentWeather(currentWeatherData);
-
-        List<ForecastReport> forecastReports = forecastParser.parseForecastDataFromApi(forecastWeatherData);
-
-        return createWeatherReport(mainDetails, currentWeather, forecastReports);
+        if (correctResponseWasReceived(currentWeatherData)) {
+            MainDetails mainDetails = createMainDetails(currentWeatherData);
+            CurrentWeather currentWeather = createCurrentWeather(currentWeatherData);
+            List<ForecastReport> forecastReports = forecastParser.parseForecastDataFromApi(forecastWeatherData);
+            return createWeatherReport(mainDetails, currentWeather, forecastReports);
+        }
+        return new WeatherReport();
     }
 
     public WeatherReport createWeatherReport(MainDetails mainDetails, CurrentWeather currentWeather, List<ForecastReport> forecastReports) {
@@ -41,7 +42,6 @@ public class WeatherTime {
         weatherReport.setCurrentWeather(currentWeather);
         return weatherReport;
     }
-
 
     private CurrentWeather createCurrentWeather(CurrentWeatherData currentWeatherData) {
         ForecastParser parser = new ForecastParser();
@@ -59,6 +59,10 @@ public class WeatherTime {
         mainDetails.setCoordinates(parseCoordinates(currentWeatherData.getCoord()));
         mainDetails.setTemperatureUnit(currentWeatherData.getTemperatureUnit());
         return mainDetails;
+    }
+
+    private boolean correctResponseWasReceived(CurrentWeatherData currentWeatherData) {
+        return currentWeatherData.getName() != null;
     }
 
     private String parseCoordinates(Coordinates coordinates) {

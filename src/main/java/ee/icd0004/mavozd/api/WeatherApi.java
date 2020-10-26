@@ -25,8 +25,9 @@ public class WeatherApi {
                 .get(ClientResponse.class);
 
         CurrentWeatherData currentWeatherData = response.getEntity(CurrentWeatherData.class);
-        currentWeatherData.setTemperatureUnit("Celsius");
-
+        if (currentWeatherData.getName() != null) {
+            currentWeatherData.setTemperatureUnit("Celsius");
+        }
         return currentWeatherData;
     }
 
