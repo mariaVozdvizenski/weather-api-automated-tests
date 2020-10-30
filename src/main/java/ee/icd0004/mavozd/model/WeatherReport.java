@@ -1,9 +1,11 @@
-package ee.icd0004.mavozd;
+package ee.icd0004.mavozd.model;
 
+import ee.icd0004.mavozd.model.CurrentWeather;
+import ee.icd0004.mavozd.model.ForecastReport;
+import ee.icd0004.mavozd.model.MainDetails;
 import lombok.Data;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Data

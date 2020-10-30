@@ -1,6 +1,10 @@
 package ee.icd0004.mavozd;
 
 import ee.icd0004.mavozd.api.*;
+import ee.icd0004.mavozd.model.CurrentWeather;
+import ee.icd0004.mavozd.model.ForecastReport;
+import ee.icd0004.mavozd.model.MainDetails;
+import ee.icd0004.mavozd.model.WeatherReport;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ee.icd0004.mavozd;
+package ee.icd0004.mavozd.model;
 
 import lombok.Data;
 

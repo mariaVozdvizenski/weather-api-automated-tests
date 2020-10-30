@@ -2,9 +2,9 @@ package ee.icd0004.mavozd.mock;
 
 import ee.icd0004.mavozd.*;
 import ee.icd0004.mavozd.api.*;
-import org.junit.BeforeClass;
+import ee.icd0004.mavozd.model.ForecastReport;
+import ee.icd0004.mavozd.model.WeatherReport;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;

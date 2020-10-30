@@ -1,6 +1,8 @@
 package ee.icd0004.mavozd;
 
 import ee.icd0004.mavozd.api.ForecastWeatherData;
+import ee.icd0004.mavozd.model.ForecastReport;
+import ee.icd0004.mavozd.model.ForecastWeather;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
