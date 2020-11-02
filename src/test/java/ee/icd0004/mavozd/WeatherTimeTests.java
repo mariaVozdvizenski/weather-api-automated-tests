@@ -9,17 +9,12 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.internal.Dates.*;
-
 
 public class WeatherTimeTests
 {
