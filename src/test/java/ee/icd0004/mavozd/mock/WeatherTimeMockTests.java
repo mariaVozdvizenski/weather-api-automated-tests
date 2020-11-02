@@ -68,6 +68,7 @@ public class WeatherTimeMockTests {
         CurrentWeatherData currentWeatherData = new CurrentWeatherData();
         currentWeatherData.setCoord(new Coordinates(0.0, 0.0));
         currentWeatherData.setMain(new MainWeatherData());
+        currentWeatherData.setName("Tallinn");
 
         ForecastWeatherData forecastWeatherData = new ForecastWeatherData();
 
