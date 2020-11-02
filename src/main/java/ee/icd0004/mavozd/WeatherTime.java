@@ -5,17 +5,23 @@ import ee.icd0004.mavozd.model.CurrentWeather;
 import ee.icd0004.mavozd.model.ForecastReport;
 import ee.icd0004.mavozd.model.MainDetails;
 import ee.icd0004.mavozd.model.WeatherReport;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
 import java.util.List;
 
 public class WeatherTime {
 
     private final WeatherApi weatherApi;
     private final ForecastParser forecastParser;
+    private final FileUtil fileUtil;
+    private static final Logger logger = LogManager.getLogger(WeatherTime.class.getName());
 
-    public WeatherTime(WeatherApi weatherApi, ForecastParser forecastParser) {
+    public WeatherTime(WeatherApi weatherApi, ForecastParser forecastParser, FileUtil fileUtil) {
         this.weatherApi = weatherApi;
         this.forecastParser = forecastParser;
+        this.fileUtil = fileUtil;
     }
 
     private CurrentWeatherData getCurrentWeatherData(String cityName){
@@ -24,6 +30,18 @@ public class WeatherTime {
 
     public ForecastWeatherData getForecastWeatherData(String cityName){
         return weatherApi.getForecastWeatherData(cityName);
+    }
+
+    public void writeWeatherReportsToFile(String fileWithCityNames) throws IOException {
+        List<String> cityNames = fileUtil.readCityNamesFromFile(fileWithCityNames);
+        for (String name: cityNames) {
+            WeatherReport weatherReportForCity = getWeatherReportForCity(name);
+            if (weatherReportForCity.getMainDetails() != null){
+                fileUtil.writeWeatherReportToFile(weatherReportForCity);
+            } else {
+                logger.error(String.format(("Incorrect city: %s"), name));
+            }
+        }
     }
 
     public WeatherReport getWeatherReportForCity(String cityName) {
@@ -39,7 +57,7 @@ public class WeatherTime {
         return new WeatherReport();
     }
 
-    public WeatherReport createWeatherReport(MainDetails mainDetails, CurrentWeather currentWeather, List<ForecastReport> forecastReports) {
+    private WeatherReport createWeatherReport(MainDetails mainDetails, CurrentWeather currentWeather, List<ForecastReport> forecastReports) {
         WeatherReport weatherReport = new WeatherReport();
         weatherReport.setForecastReportList(forecastReports.subList(0, 3));
         weatherReport.setMainDetails(mainDetails);

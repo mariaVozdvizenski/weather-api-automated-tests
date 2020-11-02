@@ -9,6 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public class WeatherTimeMockTests {
     static ForecastParser forecastParser;
     @Mock
     static WeatherApi weatherApi;
+    @Mock
+    static FileUtil fileUtil;
 
     @Test
     public void shouldHaveCorrectCityInCurrentWeatherData()
@@ -50,7 +53,7 @@ public class WeatherTimeMockTests {
         when(weatherApi.getForecastWeatherData(anyString())).thenReturn(mockedForecastWeatherData);
         when(forecastParser.parseForecastDataFromApi(any(ForecastWeatherData.class))).thenReturn(forecastReports);
 
-        WeatherTime weatherTime = new WeatherTime(weatherApi, forecastParser);
+        WeatherTime weatherTime = new WeatherTime(weatherApi, forecastParser, fileUtil);
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
 
@@ -86,7 +89,7 @@ public class WeatherTimeMockTests {
         when(weatherApi.getForecastWeatherData(anyString())).thenReturn(forecastWeatherData);
         when(forecastParser.parseForecastDataFromApi(any(ForecastWeatherData.class))).thenReturn(forecastReports);
 
-        WeatherTime weatherTime = new WeatherTime(weatherApi, forecastParser);
+        WeatherTime weatherTime = new WeatherTime(weatherApi, forecastParser, fileUtil);
 
         WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
 
