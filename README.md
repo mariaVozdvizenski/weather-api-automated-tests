@@ -45,5 +45,6 @@ mvn test
 ### Additional Notes
 1. The program saves the generated weather report files into the **generatedJson** catalogue.
 2. **cities.txt** contains the cities. Each city must be on a new line.
+3. **test_cities.txt** is a text file for testing purposes.
 
 

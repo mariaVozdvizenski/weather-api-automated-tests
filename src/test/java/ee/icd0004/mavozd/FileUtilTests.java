@@ -13,8 +13,8 @@ public class FileUtilTests {
     @Test
     public void shouldBeAbleToReadCityNamesFromExistingFile() throws IOException {
         FileUtil fileUtil = new FileUtil();
-        List<String> cityNames = fileUtil.readCityNamesFromFile("cities.txt");
-        assertThat(cityNames.size()).isEqualTo(3);
+        List<String> cityNames = fileUtil.readCityNamesFromFile("test_cities.txt");
+        assertThat(cityNames.get(0)).isNotNull();
     }
 
     @Test
@@ -30,7 +30,7 @@ public class FileUtilTests {
     @Test
     public void shouldThrowExceptionWithMessageIfGiveWrongFileFormat(){
         FileUtil fileUtil = new FileUtil();
-        String filename = "cities.csv";
+        String filename = "test_cities.csv";
         assertThatExceptionOfType(IOException.class).isThrownBy(() -> { fileUtil.readCityNamesFromFile(filename);})
                 .withMessage("File extension is incorrect. It should be .%s", FileUtil.SUPPORTED_FORMAT)
                 .withNoCause();

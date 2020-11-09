@@ -162,7 +162,7 @@ public class WeatherTimeTests
     @Test
     public void canGenerateWeatherReportForMultipleCities() throws IOException {
         FileUtil fileUtil = new FileUtil();
-        weatherTime.writeWeatherReportsToFile("cities.txt");
+        weatherTime.writeWeatherReportsToFile("test_cities.txt");
         WeatherReport weatherReport = fileUtil.readWeatherReportFromFile("Chicago.json");
         assertThat(weatherReport.getMainDetails().getCity()).isEqualTo("Chicago");
     }
