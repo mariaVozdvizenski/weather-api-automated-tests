@@ -42,7 +42,7 @@ java -cp target/icd0004-project-1.0-SNAPSHOT-jar-with-dependencies.jar ee.icd000
 mvn test
   ```
 
-### Notes
+### Additional Notes
 1. The program saves the generated weather report files into the **generatedJson** catalogue.
 2. **cities.txt** contains the cities. Each city must be on a new line.
 
