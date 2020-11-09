@@ -1,0 +1,9 @@
+build:
+  stage: build
+  script:
+    - mvn clean compile assembly:single
+
+test:
+  stage: test
+  script:
+    - mvn test
