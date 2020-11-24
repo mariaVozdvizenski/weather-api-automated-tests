@@ -68,21 +68,6 @@ public class WeatherTimeTests
     }
 
     @Test
-    public void shouldHaveCorrectDateInWeatherReport()
-    {
-        String cityName = "Tallinn";
-
-        WeatherReport weatherReport = weatherTime.getWeatherReportForCity(cityName);
-
-        Date dt = Date.from(Instant.now());
-        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
-        String expectedDate = date.format(dt);
-
-        assertThat(weatherReport.getCurrentWeather().getDate()).isEqualTo(expectedDate);
-    }
-
-
-    @Test
     public void shouldHaveThreeDayForecastInWeatherReport()
     {
         String cityName = "Tallinn";
